@@ -293,9 +293,11 @@ st.dataframe(
 st.divider()
 st.header("🎯 Explore an Individual Segment")
 
+available_clusters = sorted(filtered["Cluster"].unique())
+
 selected_cluster = st.selectbox(
     "Choose a cluster to explore",
-    clusters,
+    available_clusters,
     format_func=lambda x: f"Cluster {x}"
 )
 
