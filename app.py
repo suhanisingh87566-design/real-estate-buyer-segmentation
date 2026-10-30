@@ -228,23 +228,26 @@ investment_analysis["Investment_Percentage"] = (
 
 st.subheader("Investment Buyers by Cluster")
 
-st.subheader("Investment Buyers by Cluster")
+if investment_analysis.empty:
+    st.info("No investment data available for the selected filters.")
+else:
+    fig, ax = plt.subplots(figsize=(8, 4))
 
-fig, ax = plt.subplots(figsize=(8, 4))
+    clusters = investment_analysis["Cluster"].astype(str)
+    percentages = investment_analysis["Investment_Percentage"]
 
-ax.bar(
-    investment_analysis["Cluster"].astype(str),
-    investment_analysis["Investment_Percentage"]
-)
+    bars = ax.bar(clusters, percentages)
 
-ax.set_xlabel("Buyer Cluster")
-ax.set_ylabel("Investment Buyers (%)")
-ax.set_title("Investment Percentage by Cluster")
-ax.set_ylim(0, 100)
-ax.grid(axis="y", alpha=0.25)
+    ax.set_xlabel("Buyer Cluster")
+    ax.set_ylabel("Investment Buyers (%)")
+    ax.set_title("Investment Percentage by Cluster")
+    ax.set_ylim(0, 40)
+    ax.grid(axis="y", alpha=0.25)
 
-st.pyplot(fig)
-plt.close(fig)
+    ax.bar_label(bars, fmt="%.2f%%", padding=3)
+
+    st.pyplot(fig)
+    plt.close(fig)
 
 st.dataframe(
     investment_analysis,
