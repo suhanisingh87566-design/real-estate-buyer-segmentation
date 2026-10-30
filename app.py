@@ -179,7 +179,7 @@ left, right = st.columns(2)
 
 with left:
     st.subheader("Buyers per Cluster")
-    st.bar_chart(cluster_counts)
+    st.bar_chart(cluster_counts, y_label="Number of Buyers")
 
 with right:
     st.subheader("Acquisition Purpose")
@@ -228,10 +228,13 @@ investment_analysis["Investment_Percentage"] = (
 
 st.subheader("Investment Buyers by Cluster")
 
+chart_data = investment_analysis.set_index("Cluster")[
+    "Investment_Percentage"
+]
+
 st.bar_chart(
-    investment_analysis.set_index("Cluster")[
-        "Investment_Percentage"
-    ]
+    chart_data,
+    y_label="Investment Buyers (%)"
 )
 
 st.dataframe(
