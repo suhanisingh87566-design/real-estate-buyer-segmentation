@@ -228,14 +228,23 @@ investment_analysis["Investment_Percentage"] = (
 
 st.subheader("Investment Buyers by Cluster")
 
-chart_data = investment_analysis.set_index("Cluster")[
-    "Investment_Percentage"
-]
+st.subheader("Investment Buyers by Cluster")
 
-st.bar_chart(
-    chart_data,
-    y_label="Investment Buyers (%)"
+fig, ax = plt.subplots(figsize=(8, 4))
+
+ax.bar(
+    investment_analysis["Cluster"].astype(str),
+    investment_analysis["Investment_Percentage"]
 )
+
+ax.set_xlabel("Buyer Cluster")
+ax.set_ylabel("Investment Buyers (%)")
+ax.set_title("Investment Percentage by Cluster")
+ax.set_ylim(0, 100)
+ax.grid(axis="y", alpha=0.25)
+
+st.pyplot(fig)
+plt.close(fig)
 
 st.dataframe(
     investment_analysis,
