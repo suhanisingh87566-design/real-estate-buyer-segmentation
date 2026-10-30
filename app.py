@@ -183,12 +183,28 @@ with left:
 
 with right:
     st.subheader("Acquisition Purpose")
+
     purpose_counts = (
         filtered["acquisition_purpose"]
         .value_counts()
         .reindex(purposes, fill_value=0)
     )
-    st.bar_chart(purpose_counts)
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+
+    bars = ax.bar(
+        purpose_counts.index.astype(str),
+        purpose_counts.values
+    )
+
+    ax.set_ylabel("Number of Buyers")
+    ax.set_title("Acquisition Purpose Distribution")
+    ax.set_ylim(bottom=0)
+    ax.bar_label(bars, padding=3)
+    ax.grid(axis="y", alpha=0.25)
+
+    st.pyplot(fig)
+    plt.close(fig)
 
 
 # ---------- INVESTMENT ANALYSIS ----------
