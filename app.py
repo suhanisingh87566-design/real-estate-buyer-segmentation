@@ -354,10 +354,30 @@ else:
 
     st.subheader("Acquisition Purpose Breakdown")
 
-    st.bar_chart(
-        segment["acquisition_purpose"].value_counts()
+    segment_purpose_counts = (
+        segment["acquisition_purpose"]
+        .value_counts()
+        .reindex(purposes, fill_value=0)
     )
 
+    fig, ax = plt.subplots(figsize=(7, 4))
+
+    bars = ax.bar(
+        segment_purpose_counts.index.astype(str),
+        segment_purpose_counts.values
+    )
+
+    ax.set_xlabel("Acquisition Purpose")
+    ax.set_ylabel("Number of Buyers")
+    ax.set_title("Acquisition Purpose Breakdown")
+    ax.set_ylim(bottom=0)
+    ax.bar_label(bars, padding=3)
+    ax.grid(axis="y", alpha=0.25)
+    ax.set_axisbelow(True)
+
+    fig.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
 
 # ---------- VISUALIZATION ----------
 st.divider()
